@@ -37,6 +37,12 @@ server.use((req, res, next) => {
   next();
 });
 
+server.use(
+  jsonServer.rewriter({
+    '/api/*': '/$1'
+  })
+);
+
 server.use(router);
 server.listen(process.env.PORT || 8000, () => {
   console.log('JSON Server is running');
