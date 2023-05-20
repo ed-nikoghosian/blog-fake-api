@@ -26,7 +26,7 @@ const data = require('./db.json');
 const server = jsonServer.create();
 
 const router = jsonServer.router(clone(data), {
-  _isFake: isProductionEnv
+  _isFake: true
 });
 const middlewares = jsonServer.defaults();
 
