@@ -23,24 +23,14 @@
 const jsonServer = require('json-server');
 const clone = require('clone');
 const data = require('./db.json');
-const cors = require('cors');
-const corsOptions = {
-  origin: '*',
-  methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS', 'PUT'],
-  allowedHeaders: [
-    'Content-type',
-    'Authorization',
-    'Origin',
-    'Access-Control-Allow-Origin',
-    'Accept',
-    'Options',
-    'X-Requested-With'
-  ]
-};
 const isProductionEnv = process.env.NODE_ENV === 'production';
 const server = jsonServer.create();
 
-server.use(cors(corsOptions));
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  next();
+});
 
 const router = jsonServer.router(isProductionEnv ? clone(data) : 'db.json', {
   _isFake: isProductionEnv
